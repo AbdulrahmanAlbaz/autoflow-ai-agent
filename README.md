@@ -1,53 +1,132 @@
-# 🧠 AutoFlow – AI-Powered Task Automation with GPT-4
+# 🤖 AutoFlow – AI-Powered Python Workflow Generator
 
-**AutoFlow** is an AI agent-based system that turns natural language descriptions into Python automation scripts using GPT-4.
+**AutoFlow** is an AI coding assistant that transforms plain language task descriptions into real, working Python scripts using GPT-4.  
+It supports both **single script generation** and **agent-based breakdown**, enabling you to automate complex workflows effortlessly.
+
+---
+
+## 🔍 Why AutoFlow?
+
+This tool was built as a portfolio project for the **"Vibe Coder – AI Engineer"** role at [HUMAIN](https://humain.ai), where AI agents are the future of software development. AutoFlow showcases how LLMs like GPT-4 can:
+- Understand human intent
+- Break it down into actionable steps
+- Generate working, production-ready code
+
+---
 
 ## 🚀 Features
-- 🔹 **Basic Mode** – Generate a single Python script for any task
-- 🔸 **Agent Mode** – Break complex tasks into subtasks and generate modular scripts
-- 📦 CLI interface with `argparse`
-- 🤖 Powered by OpenAI API (GPT-4)
 
-## 🎯 Examples
+| Mode         | Description                                                  |
+|--------------|--------------------------------------------------------------|
+| `basic`      | Generates one Python script directly from your task          |
+| `agents`     | Breaks the task into subtasks and generates scripts per step |
 
-**Basic Mode:**
+- 🧠 Uses GPT-4 via OpenAI API
+- 🛠 Clean CLI interface (argparse)
+- 📁 Saves scripts automatically
+- 🔄 Modular agents for flexible workflows
+
+---
+
+## 💡 Examples
+
+### 🧾 Basic Mode
+
 ```bash
-python main.py --task "Download PDF files from a website" --mode basic
+python main.py --task "Read a CSV file and calculate average salary" --mode basic
 ```
 
-**Agent Mode:**
+🛠 Output:
+- One script: `generated_script.py`
+
+---
+
+### 🔁 Agent Mode
+
 ```bash
-python main.py --task "Read CSV → calculate average → email result" --mode agents
+python main.py --task "Read a CSV → filter high salaries → send summary email" --mode agents
 ```
 
-## 🛠 Setup
+🛠 Output:
+- `agents/agent_1.py` → CSV reader
+- `agents/agent_2.py` → Filter logic
+- `agents/agent_3.py` → Email sender
 
-### 1. Install requirements
+---
+
+## 🛠 Setup Instructions
+
+1. **Install dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Add your OpenAI API Key to `.env`
+2. **Add your OpenAI key in `.env`**
+
+```env
+OPENAI_API_KEY=your_openai_key_here
 ```
-OPENAI_API_KEY=your_api_key_here
+
+3. **Run the CLI**
+
+```bash
+python main.py --task "Describe your task" --mode [basic|agents]
 ```
 
-## 📁 Output
+---
 
-- In `basic` mode → outputs `generated_script.py`
-- In `agents` mode → saves each subtask in `agents/agent_#.py`
+## 🔐 .env Example
 
-## 💡 Use Case Examples
-| Input Prompt | What Happens |
-|--------------|---------------|
-| "Monitor a folder for new files" | GPT writes Python script to watch file system |
-| "Summarize a long PDF" | GPT generates a text summarizer using PyMuPDF |
-| "Read data → filter → email" | Subtasked into 3 separate Python scripts |
+```
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+---
+
+## 📂 Project Structure
+
+```
+autoflow-ai-agent/
+├── agents/              # Holds modular agent scripts
+├── main.py              # CLI entry point
+├── prompts.py           # Prompt templates
+├── utils.py             # OpenAI interaction
+├── requirements.txt
+└── .env                 # Your OpenAI key
+```
+
+---
+
+## 🧠 Technologies
+
+- GPT-4 via OpenAI API
+- Python 3.10+
+- LangChain-like task structuring (custom)
+- CLI via argparse
+- dotenv for secure key management
+
+---
 
 ## 📄 License
+
 MIT
 
-## 🤝 Contributing
-Want to help? Fork the repo and open a PR!
+---
 
-## ✨ Created by MJ using GPT-4 and ❤️ for AI automation.
+## 🙋 About the Author
+
+**AbdulrahmanAlbaz** – M.Eng. in Applied AI for Digital Production Management  
+💼 Applying for the "Vibe Coder" role @ HUMAIN  
+📫 Contact: [Your Email or GitHub Profile]
+
+---
+
+## ✨ Want to See It in Action?
+
+Check out the example prompts or run your own.  
+This project was built to demonstrate how **AI agents + prompt engineering** can change the way we build software.
+
+---
+
+> 🔗 Let's build the future of agent-driven development together.
