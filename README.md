@@ -118,7 +118,7 @@ MIT
 
 **AbdulrahmanAlbaz** – M.Eng. in Applied AI for Digital Production Management  
 💼 Applying for the "Vibe Coder" role @ HUMAIN  
-📫 Contact: [Your Email or GitHub Profile]
+📫 Contact: [Abdulrahman.albaz@hotmail.com]
 
 ---
 
