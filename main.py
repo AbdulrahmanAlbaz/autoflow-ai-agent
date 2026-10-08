@@ -1,33 +1,33 @@
 import argparse
 import os
 from prompts import build_prompt, task_breakdown_prompt, subtask_script_prompt
-from utils import generate_script
+from utils import generate_script, validate_code, parse_subtasks
 
 def generate_basic(task):
     prompt = build_prompt(task)
-    code = generate_script(prompt)
+    code = validate_code(generate_script(prompt))
     print("\n🧠 Generated Script:\n")
     print(code)
 
     save = input("\n💾 Save script as generated_script.py? (y/n): ").strip().lower()
     if save == 'y':
-        with open("generated_script.py", "w") as f:
+        with open("generated_script.py", "w", encoding="utf-8") as f:
             f.write(code)
         print("✅ Script saved to generated_script.py")
 
 def generate_agents(task):
     print("\n🔍 Breaking task into subtasks...")
     breakdown = generate_script(task_breakdown_prompt(task))
-    subtasks = [line.split('. ', 1)[1] for line in breakdown.strip().splitlines() if '. ' in line]
+    subtasks = parse_subtasks(breakdown)
 
     print("\n🛠 Generating agents...\n")
     os.makedirs("agents", exist_ok=True)
 
     for i, sub in enumerate(subtasks, 1):
         print(f"⚙️ Subtask {i}: {sub}")
-        code = generate_script(subtask_script_prompt(sub))
+        code = validate_code(generate_script(subtask_script_prompt(sub)))
         filename = f"agents/agent_{i}.py"
-        with open(filename, "w") as f:
+        with open(filename, "w", encoding="utf-8") as f:
             f.write(code)
         print(f"✅ Saved: {filename}")
 
@@ -47,4 +47,7 @@ def main():
         generate_agents(args.task)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (ValueError, SyntaxError) as exc:
+        raise SystemExit(f"Generation failed: {exc}") from exc

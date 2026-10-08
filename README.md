@@ -1,132 +1,62 @@
-# 🤖 AutoFlow – AI-Powered Python Workflow Generator
+# AutoFlow
 
-**AutoFlow** is an AI coding assistant that transforms plain language task descriptions into real, working Python scripts using GPT-4.  
-It supports both **single script generation** and **agent-based breakdown**, enabling you to automate complex workflows effortlessly.
+A Python CLI prototype that turns natural-language tasks into Python scripts using an OpenAI model. Built by Abdelrahman Elbaz.
 
----
+## How it works
 
-## 🔍 Why AutoFlow?
-
-This tool was built as a portfolio project for the **"Vibe Coder – AI Engineer"** role at [HUMAIN](https://humain.ai), where AI agents are the future of software development. AutoFlow showcases how LLMs like GPT-4 can:
-- Understand human intent
-- Break it down into actionable steps
-- Generate working, production-ready code
-
----
-
-## 🚀 Features
-
-| Mode         | Description                                                  |
-|--------------|--------------------------------------------------------------|
-| `basic`      | Generates one Python script directly from your task          |
-| `agents`     | Breaks the task into subtasks and generates scripts per step |
-
-- 🧠 Uses GPT-4 via OpenAI API
-- 🛠 Clean CLI interface (argparse)
-- 📁 Saves scripts automatically
-- 🔄 Modular agents for flexible workflows
-
----
-
-## 💡 Examples
-
-### 🧾 Basic Mode
-
-```bash
-python main.py --task "Read a CSV file and calculate average salary" --mode basic
+```mermaid
+flowchart TD
+    A[Task description] --> B{Mode}
+    B --> C[Generate one script]
+    B --> D[Split task into subtasks]
+    D --> E[Generate script per subtask]
+    C --> F[Check Python syntax]
+    E --> F
+    F --> G[Save for manual review]
 ```
 
-🛠 Output:
-- One script: `generated_script.py`
+| Mode | Behavior |
+| --- | --- |
+| `basic` | Generates and displays one script; asks before saving `generated_script.py`. |
+| `agents` | Decomposes a task and saves numbered scripts under `agents/`. |
 
----
+The `agents` mode generates separate scripts. It does not coordinate their execution or define shared inputs and outputs.
 
-### 🔁 Agent Mode
+## Quick start
 
-```bash
-python main.py --task "Read a CSV → filter high salaries → send summary email" --mode agents
-```
-
-🛠 Output:
-- `agents/agent_1.py` → CSV reader
-- `agents/agent_2.py` → Filter logic
-- `agents/agent_3.py` → Email sender
-
----
-
-## 🛠 Setup Instructions
-
-1. **Install dependencies**
+Requires Python 3.10+ and an OpenAI API key with access to the selected model.
 
 ```bash
+python -m venv .venv
+# macOS / Linux
+source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-2. **Add your OpenAI key in `.env`**
-
-```env
-OPENAI_API_KEY=your_openai_key_here
-```
-
-3. **Run the CLI**
+Copy `.env.example` to `.env`, set `OPENAI_API_KEY`, and optionally change `OPENAI_MODEL` (default: `gpt-4`). API usage may incur charges.
 
 ```bash
-python main.py --task "Describe your task" --mode [basic|agents]
+python main.py --task "Read a CSV and calculate average salary" --mode basic
+python main.py --task "Read a CSV and filter high salaries" --mode agents
 ```
 
----
+## Scope and limitations
 
-## 🔐 .env Example
+- Removes outer Markdown fences and checks Python syntax before saving.
+- Accepts numbered or bulleted subtask lists; rejects empty responses and truncated model output.
+- Generated scripts are never executed by AutoFlow. Review them before running.
+- Syntax validation does not prove correctness, security, dependency availability, or production readiness.
+- No sandbox, execution orchestrator, or automatic functional evaluation is included.
+- Reusing output names can overwrite earlier generated files; keep copies you need.
 
-```
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
-```
+## Files
 
----
+- `main.py`: command-line interface and output handling.
+- `prompts.py`: task and code-generation prompts.
+- `utils.py`: model calls, syntax checks, and subtask parsing.
+- `.env.example`: configuration template; `.env` is ignored by Git.
 
-## 📂 Project Structure
+## License
 
-```
-autoflow-ai-agent/
-├── agents/              # Holds modular agent scripts
-├── main.py              # CLI entry point
-├── prompts.py           # Prompt templates
-├── utils.py             # OpenAI interaction
-├── requirements.txt
-└── .env                 # Your OpenAI key
-```
-
----
-
-## 🧠 Technologies
-
-- GPT-4 via OpenAI API
-- Python 3.10+
-- LangChain-like task structuring (custom)
-- CLI via argparse
-- dotenv for secure key management
-
----
-
-## 📄 License
-
-MIT
-
----
-
-## 🙋 About the Author
-
-**AbdulrahmanAlbaz** – M.Eng. in Applied AI for Digital Production Management  
-💼 Applying for the "Vibe Coder" role @ HUMAIN  
-📫 Contact: [Abdulrahman.albaz@hotmail.com]
-
----
-
-## ✨ Want to See It in Action?
-
-Check out the example prompts or run your own.  
-This project was built to demonstrate how **AI agents + prompt engineering** can change the way we build software.
-
----
-
-> 🔗 Let's build the future of agent-driven development together.
+MIT. See `LICENSE`.
